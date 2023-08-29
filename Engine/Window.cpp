@@ -20,6 +20,9 @@ int CreateWindow(int width, int height, const char* windowName)
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
 
+    if (glewInit() != GLEW_OK) // GLEW INIT
+        cout << '\n' << "GLEW INIT ERROR";
+
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
@@ -28,8 +31,8 @@ int CreateWindow(int width, int height, const char* windowName)
 
         glBegin(GL_TRIANGLES);
         glVertex2f(-0.5f, -0.5f);
-        glVertex2f(0.0f, 0.5f);
-        glVertex2f(0.5f, -0.5f);
+        glVertex2f( 0.0f,  0.5f);
+        glVertex2f( 0.5f, -0.5f);
         glEnd();
 
         /* Swap front and back buffers */

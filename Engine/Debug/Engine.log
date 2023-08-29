@@ -1,3 +1,0 @@
-﻿  BaseGame.cpp
-C:\Users\Aula 2\Desktop\KissTheGoat Engine\Engine\BaseGame.cpp(4,1): warning C4326: el tipo de valor devuelto de 'main' debe ser 'int' en lugar de 'void'
-  Engine.vcxproj -> C:\Users\Aula 2\Desktop\KissTheGoat Engine\Debug\Engine.exe

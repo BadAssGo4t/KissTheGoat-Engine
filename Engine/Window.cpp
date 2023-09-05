@@ -40,6 +40,9 @@ int CreateWindow(int width, int height, const char* windowName)
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0); // create vertex struct
 
+
+    unsigned int shader = Renderer::CreateShader(Renderer::vertexShader, Renderer::fragmentShader);
+
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     /* Loop until the user closes the window */

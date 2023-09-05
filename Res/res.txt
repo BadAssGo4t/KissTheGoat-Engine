@@ -1,0 +1,10 @@
+https://learnopengl.com/Getting-started/Hello-Triangle
+
+https://learnopengl.com/Getting-started/Shaders
+
+https://learnopengl.com/Getting-started/Textures
+
+https://en.wikibooks.org/wiki/OpenGL_Programming/Modern_OpenGL_Tutorial_Text_Rendering_01
+https://www.youtube.com/watch?v=ZrL6qUNvKwk
+
+

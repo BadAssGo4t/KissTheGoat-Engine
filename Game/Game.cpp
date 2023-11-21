@@ -10,12 +10,16 @@ Game::Game()
 	rightAnim = nullptr;
 	upAnim = nullptr;
 	idleUpAnim = nullptr;
+	iddleBoardAnim = nullptr;
+
+	/*shape = Shape(ShapeType::Triangle);
+	squareAuto = Shape(ShapeType::Square);*/
 
 }
 
 void Game::Play()
 {
-	EngineInit(800, 600, "Game Window");
+	EngineInit(800, 800, "Padoru Season");
 	UpdateEngine();
 }
 
@@ -23,59 +27,74 @@ enum State
 {
 	Sleft, Sright, Sup, Sdown
 };
-State linkState = Sdown;
+State sonnehState = Sdown;
 
 void Game::Start()
 {
+	/*shape.SetPosition(1.0f, 0.0f, 0.0f);
+	squareAuto.SetPosition(1.0f, 0.0f, 0.0f);*/
+	Board = Sprite("Res/Sprites/sonic_mania_sprites.png");
+	fast = Sprite("Res/Sprites/R.png");
+	sonneh = Sprite("Res/Sprites/sonic_mania_sprites.png");
 	
-	padoru = Sprite("Res/Sprites/padoru.png");
-	test = Sprite("Res/Sprites/R.png");
-	link = Sprite("Res/Sprites/link.png");
+	
 
-	test.SetPosition(-0.5f, 0.0f, -1.0f);
-	test.Scale(1.0f, 1.0f, 1.0f);
 
-	padoru.SetPosition(-0.5f, 0.0f, -1.0f);
-	padoru.Scale(1.0f, 1.0f, 1.0f);
+	Board.canCollision = true;
+	sonneh.canCollision = true;
+	Board.weight = 2;
+	sonneh.strength = 1;
 
-	padoru.canCollision = true;
-	link.canCollision = true;
-	link.strength = 1;
 
+	iddleBoardAnim = new Animation();
+	iddleBoardAnim->AddFrame(132, 94, 49, 48, 830, 465, 0.0008, 5);
 	rightAnim = new Animation();
-	rightAnim->AddFrame(0, 0, 96, 104, 961, 831, 0.001, 10);
+	rightAnim->AddFrame(272, 307, 35.8, 39, 830, 465, 0.001, 12);
 	upAnim = new Animation();
-	upAnim->AddFrame(0, 103, 96, 104, 961, 831, 0.001, 10);
+	upAnim->AddFrame(272, 307, 35.8, 39, 830, 465, 0.001, 12);
 	leftAnim = new Animation();
-	leftAnim->AddFrame(2, 208, 96, 102, 961, 831, 0.001, 10);
+	leftAnim->AddFrame(272, 307, 35.8, 39, 830, 465, 0.001, 12);
 	downAnim = new Animation();
-	downAnim->AddFrame(2, 312, 96, 102, 961, 831, 0.001, 10);
-	idleRightAnim = new Animation();
-	idleRightAnim->AddFrame(2, 415, 96, 102, 961, 831, 0.007, 3);
-	idleUpAnim = new Animation();
-	idleUpAnim->AddFrame(2, 517, 96, 102, 961, 831, 0.007, 1);
-	idleLeftAnim = new Animation();
-	idleLeftAnim->AddFrame(2, 620, 96, 102, 961, 831, 0.007, 3);
+	downAnim->AddFrame(272, 307, 36.3, 39, 830, 465, 0.001, 12);
 	idleDownAnim = new Animation();
-	idleDownAnim->AddFrame(2, 723, 96, 102, 961, 831, 0.007, 3);
+	idleDownAnim->AddFrame(45, 399, 30.8, 39, 830, 465, 0.001, 7);
 
-	link.SetAnimation(idleDownAnim);
-	link.SetPosition(1.05f, 0.0f, -1.0f);
+	Board.SetAnimation(iddleBoardAnim);
+	Board.SetPosition(5.5f, 0.0f, -1.0f);
 
+	
+
+	sonneh.SetAnimation(idleDownAnim);
+	sonneh.SetPosition(1.0f, 0.0f, -1.0f);
+
+	fast.SetPosition(0.0f, 2.1f, -1.0f);
+	fast.Scale(20.0f, 20.0f, 20.0f);
+	
+	
+	
 }
 float a = 1.0f;
-float cameraX = 0.1f;
-float cameraY = 0.1f;
-float cameraZ = 0.1f;
+float cameraX = 1.0f;
+float cameraY = 2.4f;
+float cameraZ = 15.0f;
 
-const float valueModif = 0.01f;
+const float valueModif = 0.1f;
 
 float testX = -0.5f;
 void Game::Update()
 {
 	a += 0.0001;
+	////shape.Rotate(0, 0, a);
+	///*shape.Scale(0.1 + a, 1, 1);
+	//shape.SetPosition(-1 + a, 0, 0);
+	//squareAuto.Draw();*/
 
 	CameraMove(cameraX, cameraY, cameraZ);
+
+	//squareAuto.Rotate(0.0f, 0.0f, 0.0f + a);
+
+	//squareAuto.Draw();
+	//shape.Draw();
 
 	Input(KEYCODE_Z, cameraX, -valueModif);
 	Input(KEYCODE_X, cameraY, -valueModif);
@@ -87,56 +106,57 @@ void Game::Update()
 
 	Input(KEYCODE_1, testX, valueModif);
 
-	link.Rotate(0, 0, a);
+	//sonneh.Rotate(0, 0, a);
 
 	if (GetKey(KEYCODE_A))
 	{
-		linkState = Sleft;
-		link.SetAnimation(leftAnim);
-		link.SetPosition(link.GetPositionX() - 0.001f, link.GetPositionY(), link.GetPositionZ());
+		sonnehState = Sleft;
+		sonneh.SetAnimation(leftAnim);
+		sonneh.SetPosition(sonneh.GetPositionX() - 0.1f, sonneh.GetPositionY(), sonneh.GetPositionZ());
 	}
-	else if (linkState == Sleft)
+	else if (sonnehState == Sleft)
 	{
-		link.SetAnimation(idleLeftAnim);
+		sonneh.SetAnimation(idleDownAnim);
 	}
 	if (GetKey(KEYCODE_D))
 	{
-		linkState = Sright;
-		link.SetAnimation(rightAnim);
-		link.SetPosition(link.GetPositionX() + 0.001f, link.GetPositionY(), link.GetPositionZ());
+		sonnehState = Sright;
+		sonneh.SetAnimation(rightAnim);
+		sonneh.SetPosition(sonneh.GetPositionX() + 0.1f, sonneh.GetPositionY(), sonneh.GetPositionZ());
 	}
-	else if (linkState == Sright)
+	else if (sonnehState == Sright)
 	{
-		link.SetAnimation(idleRightAnim);
+		sonneh.SetAnimation(idleDownAnim);
 	}
 	if (GetKey(KEYCODE_W))
 	{
-		linkState = Sup;
-		link.SetAnimation(upAnim);
-		link.SetPosition(link.GetPositionX(), link.GetPositionY() + 0.001f, link.GetPositionZ());
+		sonnehState = Sup;
+		sonneh.SetAnimation(upAnim);
+		sonneh.SetPosition(sonneh.GetPositionX(), sonneh.GetPositionY() + 0.1f, sonneh.GetPositionZ());
 	}
-	else if (linkState == Sup)
+	else if (sonnehState == Sup)
 	{
-		link.SetAnimation(idleUpAnim);
+		sonneh.SetAnimation(idleDownAnim);
 	}
 	if (GetKey(KEYCODE_S))
 	{
-		linkState = Sdown;
-		link.SetAnimation(downAnim);
-		link.SetPosition(link.GetPositionX(), link.GetPositionY() - 0.001f, link.GetPositionZ());
+		sonnehState = Sdown;
+		sonneh.SetAnimation(downAnim);
+		sonneh.SetPosition(sonneh.GetPositionX(), sonneh.GetPositionY() - 0.1f, sonneh.GetPositionZ());
 	}
-	else if (linkState == Sdown)
+	else if (sonnehState == Sdown)
 	{
-		link.SetAnimation(idleDownAnim);
+		sonneh.SetAnimation(idleDownAnim);
 	}
 
-	test.SetPosition(testX, 0.0f, -1.0f);
-
-	test.Draw();
-	padoru.Draw();
-	link.CheckCollisionAABB(padoru);
-	link.Update();
-	link.Draw();
+	
+	
+	fast.Draw();
+	Board.Update();
+	Board.Draw();
+	sonneh.CheckCollisionAABB(Board);
+	sonneh.Update();
+	sonneh.Draw();
 
 }
 
@@ -152,6 +172,7 @@ bool Game::Input(int keycode, float& variable, float modif)
 
 void Game::Delete()
 {
+	if (iddleBoardAnim) delete iddleBoardAnim;
 	if (rightAnim) delete rightAnim;
 	if (leftAnim) delete leftAnim;
 	if (upAnim) delete upAnim;

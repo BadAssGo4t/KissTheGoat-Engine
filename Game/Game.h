@@ -6,15 +6,17 @@ class Game : public BaseGame
 private:
 	Shape shape;
 	Shape squareAuto;
-	Sprite padoru;
-	Sprite test;
-	Sprite link;
+	Sprite Board;
+	Sprite fast;
+	Sprite sonneh;
+
 
 	void Update();
 	bool Input(int keycode, float& variable, float modif);
 	void Start();
 	void Delete();
 
+	Animation* owo;
 	Animation* leftAnim;
 	Animation* rightAnim;
 	Animation* upAnim;
@@ -23,6 +25,7 @@ private:
 	Animation* idleUpAnim;
 	Animation* idleLeftAnim;
 	Animation* idleDownAnim;
+	Animation* iddleBoardAnim;
 public:
 	Game();
 	void Play();
